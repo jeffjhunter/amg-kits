@@ -1,0 +1,25 @@
+{
+  "slug": "landing-page-fix-kit",
+  "title": "The AI Landing Page Fix Kit",
+  "tagline": "Fix your landing page before buying more traffic. Audit the page, map the journey, choose the next fix.",
+  "guide_name": "the free illustrated AI Landing Page Fix Kit guide",
+  "guide_pitch": "the 15-page step-by-step guide with the worked example, visuals and checklists",
+  "optin_url": "https://get.aimoneygroup.com/ai-landing-page-fix-kit",
+  "optin_live": false,
+  "added": "2026-10-26",
+  "skill_description": "Audit a landing page with a read-only evidence rubric (message match, offer clarity, proof, action, mobile, journey, measurement) and map the customer journey. Use when someone asks to review, audit or fix a landing page, opt-in page or sales page.",
+  "files": [
+    ["files/intake.md", "Fill this in first: audience, promise, offer, action, what you know and do not know"],
+    ["files/kickoff-prompt.md", "The prompt that starts the audit"],
+    ["files/audit-instructions.md", "The rubric and rules the AI follows"],
+    ["files/output-template.md", "Shape of the audit report"],
+    ["files/journey-template.md", "Customer journey map template"],
+    ["files/correction-prompt.md", "Second-pass check of the AI's own report"],
+    ["files/annotated-examples.md", "Short good/bad examples"],
+    ["files/worked-audit.md", "A real worked audit of a live AI Money Group page"],
+    ["files/journey-proposal.md", "A worked journey proposal"],
+    ["files/real-case-page-copy.txt", "Page copy used in the worked audit"],
+    ["files/real-case-observation.json", "How and when that page was captured"],
+    ["files/source-ledger.json", "Sources cited in the worked audit"]
+  ]
+}
