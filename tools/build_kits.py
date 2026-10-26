@@ -58,40 +58,56 @@ def build_kit(d):
     (d / "SKILL.md").write_text(skill, encoding="utf-8")
 
     rows = "\n".join(f"| [`{f}`]({f}) | {desc} |" for f, desc in k["files"])
-    readme = f"""# {k['title']}
+    guide = utm(k["optin_url"], slug, "readme-button")
+    button = f'<p align="center"><a href="{guide}"><img src="assets/cta-guide.png" alt="Get the free guide" height="62"></a></p>'
+    preview = (f"""
+## 👀 Inside the free guide
+<a href="{utm(k['optin_url'], slug, 'readme-preview')}"><img src="assets/preview.png" alt="Pages from the free guide" width="100%"></a>
+
+The AI files are half the kit. {k['guide_pitch'].capitalize()} shows you *why* each step matters. It's free.
+
+{button}
+""" if (d / "assets/preview.png").exists() else "")
+    readme = f"""<p align="center"><img src="assets/cover.png" alt="{k['title']}" width="100%"></p>
+
+{button}
+
+<p align="center">
+  <img src="https://img.shields.io/badge/price-free-e65b25?style=flat-square" alt="Free">
+  <img src="https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20ChatGPT%20%C2%B7%20Codex%20%C2%B7%20Hermes%20%C2%B7%20OpenClaw-171717?style=flat-square" alt="Works with Claude, ChatGPT, Codex, Hermes, OpenClaw">
+  <img src="https://img.shields.io/badge/installable-skill-bd471d?style=flat-square" alt="Installable skill">
+</p>
 
 {banner(k, 'readme')}
 
-{k['tagline']}
-
-## Use it with your AI (one line)
+## ⚡ Use it in one line
 Paste this into Claude, ChatGPT, Claude Code, Codex, Hermes or OpenClaw:
 
 ```text
-Read {RAW}/{slug}/START-HERE.md and follow it to audit my landing page.
+Read {RAW}/{slug}/START-HERE.md and follow it.
 ```
 
-Can't give your AI a link? Click **Code → Download ZIP** at the top of the repo and upload the
-`{slug}` folder's files instead.
+<img src="assets/how-it-works.png" alt="How it works" width="100%">
 
-## Install as a skill (Claude Code / Hermes / OpenClaw)
-Copy this folder into your skills directory (for Claude Code: `~/.claude/skills/{slug}/`).
-`SKILL.md` is the entry point.
-
-## What's inside
+Can't give your AI a link? Click **Code → Download ZIP** at the top of the repo and upload this folder's files.
+{preview}
+## 🧰 What's inside
 | File | What it's for |
 |---|---|
 | [`START-HERE.md`](START-HERE.md) | Step-by-step instructions your AI follows |
 {rows}
 
-## Want the full guide and support?
-The AI files are only half of the kit. **[Get {k['guide_name']} →]({utm(k['optin_url'], slug, 'readme-footer')})**
-
-Building more with AI? Join **[AI Money Group]({utm(AMG_URL, slug, 'readme-amg')})** for the classrooms,
-live calls and the rest of the kits.
+## 🧩 Install as a skill
+Copy this folder into your skills directory (Claude Code: `~/.claude/skills/{slug}/`, Hermes: `~/.hermes/skills/`).
+`SKILL.md` is the entry point.
 
 ---
-Free to use for your own business. Please don't resell or republish the kit as your own.
+
+<p align="center"><b>Building more with AI?</b> Classrooms, live calls and every kit's full guide.<br><br>
+<a href="{utm(AMG_URL, slug, 'readme-amg')}"><img src="../assets/cta-amg.png" alt="Join AI Money Group" height="58"></a></p>
+
+<p align="center"><sub>Free to use for your own business. Please don't resell or republish the kit as your own.
+Made by Jeff J Hunter · AI Money Group</sub></p>
 """
     (d / "README.md").write_text(readme, encoding="utf-8")
     return k
@@ -100,31 +116,41 @@ Free to use for your own business. Please don't resell or republish the kit as y
 def main():
     kits = [build_kit(d) for d in sorted(ROOT.iterdir())
             if d.is_dir() and (d / "kit.json").exists()]
-    rows = "\n".join(
-        f"| [{k['title']}]({k['slug']}/) | {k['tagline']} | [Free guide →]({utm(k['optin_url'], k['slug'], 'hub')}) |"
+    cards = "\n".join(
+        f"""<tr><td width="42%"><a href="{k['slug']}/"><img src="{k['slug']}/assets/cover.png" alt="{k['title']}" width="100%"></a></td>
+<td><h3><a href="{k['slug']}/">{k['title']}</a></h3>{k['tagline']}<br><br>
+<a href="{k['slug']}/"><b>Open the kit →</b></a> &nbsp;·&nbsp; <a href="{utm(k['optin_url'], k['slug'], 'hub')}"><b>📘 Free guide →</b></a></td></tr>"""
         for k in sorted(kits, key=lambda k: k["added"], reverse=True))
-    hub = f"""# AI Money Group Kits
+    hub = f"""<p align="center"><img src="assets/hub-banner.png" alt="AI Money Group Kits" width="100%"></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/kits-{len(kits)}-e65b25?style=flat-square" alt="kits">
+  <img src="https://img.shields.io/badge/price-free-171717?style=flat-square" alt="Free">
+  <img src="https://img.shields.io/badge/works%20with-any%20AI-bd471d?style=flat-square" alt="Works with any AI">
+</p>
 
 Free, AI-ready kits from **Jeff J Hunter** and **[AI Money Group]({utm(AMG_URL, 'hub', 'hub-top')})**.
-Each folder holds the files your AI needs. Each kit also has a free illustrated guide; grab it from the
-links below.
+Each folder holds the files your AI needs, and each kit has a **free illustrated guide** that goes with it.
 
-## Use any kit in one line
+## ⚡ Use any kit in one line
 ```text
 Read {RAW}/<kit-folder>/START-HERE.md and follow it.
 ```
 
-## Kits
-| Kit | What it does | Guide |
-|---|---|---|
-{rows}
+## 🧰 The kits
+<table>
+{cards}
+</table>
 
-## For AI agents
-Each kit folder has `START-HERE.md` (instructions) and `SKILL.md` (installable skill). See `AGENTS.md`.
+## 🤖 For AI agents
+Each kit folder has `START-HERE.md` (instructions) and `SKILL.md` (installable skill). See [`AGENTS.md`](AGENTS.md).
 
 ---
-Free to use for your own business. Please don't resell or republish the kits as your own.
-Want implementation help? **[Join AI Money Group →]({utm(AMG_URL, 'hub', 'hub-footer')})**
+
+<p align="center"><b>Want help putting these to work?</b> Classrooms, live calls and every kit's full guide.<br><br>
+<a href="{utm(AMG_URL, 'hub', 'hub-footer')}"><img src="assets/cta-amg.png" alt="Join AI Money Group" height="58"></a></p>
+
+<p align="center"><sub>Free to use for your own business. Please don't resell or republish the kits as your own.</sub></p>
 """
     (ROOT / "README.md").write_text(hub, encoding="utf-8")
     (ROOT / "AGENTS.md").write_text(
